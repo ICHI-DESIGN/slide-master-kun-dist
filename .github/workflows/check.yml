@@ -1,0 +1,29 @@
+# 見本3組を Windows と Linux で描いて検品する（配布用リポジトリで動く。自分用ではこのフォルダがリポジトリの直下に無いので動かない）
+name: check
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  samples:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      # GitHub の実行環境には Google Chrome が入っているので、それで描く
+      - run: npm run samples -- --sheets
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sheets-${{ matrix.os }}
+          path: reference/examples/*/out/sheet.*
+          if-no-files-found: ignore
