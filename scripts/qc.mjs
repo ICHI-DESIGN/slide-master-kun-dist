@@ -432,7 +432,8 @@ export async function checkSlide(page) {
       add('warn', 'LOW_JUMP', `文字の大小差が小さい（最大/本文=${jump.toFixed(2)}倍。目安1.5倍以上）`, '見出しか主役を大きく、脇役を小さく', '');
 
     /* 10. 置き忘れ文字 */
-    if (/lorem|ipsum|TODO|\bxxx\b|\[insert|undefined|NaN|ここに(入れる|入力)|ダミー/i.test(slide.innerText))
+    // NaN・undefined は大文字小文字を区別して単語として探す（区別しないと finance・banana の nan に反応する）
+    if (/lorem|ipsum|\bTODO\b|\bxxx\b|\[insert|ここに(入れる|入力)|ダミー/i.test(slide.innerText) || /\bNaN\b|\bundefined\b/.test(slide.innerText))
       add('error', 'PLACEHOLDER', '置き忘れの仮テキストがある', '本文に差し替える', '');
 
     /* 図解（主役ビジュアル）の有無 */

@@ -34,9 +34,9 @@
 |---|---|
 | ![](docs/images/message_dynamic.jpg) | ![](docs/images/stats_corporate.jpg) |
 
-| グラフ（fresh） | 問いかけ・ワーク（corporate） |
+| 折れ線グラフ（fresh） | 問いかけ・ワーク（corporate） |
 |---|---|
-| ![](docs/images/bars_fresh.jpg) | ![](docs/images/question_corporate.jpg) |
+| ![](docs/images/line_fresh.jpg) | ![](docs/images/question_corporate.jpg) |
 
 **業種・世界観のテーマ12種**（表紙／グラフ／キーメッセージ／数字の並び）
 
@@ -45,10 +45,6 @@
 **全33型の一覧**
 
 ![型の一覧](docs/images/gallery_sheet.jpg)
-
-**場面別の見本**（講座・会社説明など）
-
-![場面別](docs/images/scene_sheet.jpg)
 
 **セミナー資料の見本**（`reference/examples/cafe-workshop`）
 
