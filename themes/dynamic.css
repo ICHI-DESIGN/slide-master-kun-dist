@@ -27,6 +27,7 @@
   /* --- 字組み: 見出しは極太ゴシック。英字アクセントは斜体の Archivo --- */
   --font-display: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
   --font-body:    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  --palt-body-add: 0.02em;   /* 本文の書体が palt（かなの字詰め）に対応しているので、詰めたぶん字間を足す */
   --font-en:      "Archivo", "Helvetica Neue", Arial, sans-serif;
   --tracking: 0.01em;
 

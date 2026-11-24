@@ -54,7 +54,7 @@ function extractText() {
       const upper = cs.textTransform === 'uppercase';
       const deco = (cs.textDecorationLine || '');
       const style = { color: hex([r, g, b]), alpha: a, fs, bold: +cs.fontWeight >= 600,
-        face: cs.fontFamily.split(',')[0].replace(/["']/g, '').trim(),
+        face: cs.fontFamily.split(',').map(f => f.replace(/["']/g, '').trim()).find(f => f !== 'SMK Num') || 'sans-serif',   // 数字だけの欧文書体（SMK Num）は PowerPoint に無いので飛ばす
         spacing: parseFloat(cs.letterSpacing) || 0,
         underline: deco.includes('underline'), strike: deco.includes('line-through') };
       const text = node.data.replace(/\s+/g, ' ');

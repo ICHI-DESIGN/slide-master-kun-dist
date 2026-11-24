@@ -22,6 +22,7 @@
   --cover-muted: #A594C8;
 
   --font-display: "Space Grotesk", "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  --font-num:     "Space Grotesk";   /* 数字も見出しと同じ書体で組む（engine.css の欧文の数字を使わない） */
   --font-body:    "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
   --tracking: 0.03em;
 

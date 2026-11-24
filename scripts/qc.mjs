@@ -126,9 +126,12 @@ export async function checkSlide(page) {
         mc.font = `40px "${fam}", ${fb}`; return Math.abs(mc.measureText(PROBE).width - base) > 0.01;
       });
       const fams = new Set();
+      // 数字だけの欧文書体（SMK Num）は数字の無い文字では読み込まれないので、その次の書体を見る。数字を含む文字があるときだけ SMK Num も確かめる
       for (const t of texts) if (!isChrome(t.el)) {
-        const fam = norm(getComputedStyle(t.el).fontFamily.split(',')[0]);
-        if (!GENERIC.has(fam.toLowerCase())) fams.add(fam);
+        const list = getComputedStyle(t.el).fontFamily.split(',').map(norm);
+        if (list[0] === 'SMK Num' && /[0-9]/.test(t.el.textContent)) fams.add('SMK Num');
+        const fam = list.find(f => f !== 'SMK Num') || '';
+        if (fam && !GENERIC.has(fam.toLowerCase())) fams.add(fam);
       }
       const missing = new Set();
       for (const fam of fams) {

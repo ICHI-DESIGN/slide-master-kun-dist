@@ -27,6 +27,7 @@
 
   /* --- 字組み --- */
   --font-display: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
+  --font-num:     "Zen Maru Gothic";   /* 数字も見出しと同じ書体で組む（engine.css の欧文の数字を使わない） */
   --font-body:    "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
   --tracking: 0.04em;
 

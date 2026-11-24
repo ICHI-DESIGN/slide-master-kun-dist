@@ -26,6 +26,7 @@
 
   /* --- 字組み --- */
   --font-display: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
+  --font-num:     "M PLUS Rounded 1c";   /* 数字も見出しと同じ書体で組む（engine.css の欧文の数字を使わない） */
   --font-body:    "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
   --tracking: 0.03em;
 

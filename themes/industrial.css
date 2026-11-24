@@ -23,6 +23,7 @@
 
   --font-display: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
   --font-body:    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  --palt-body-add: 0.02em;   /* 本文の書体が palt（かなの字詰め）に対応しているので、詰めたぶん字間を足す */
   --tracking: 0.02em;
 
   --radius: 0px;

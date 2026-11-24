@@ -23,6 +23,7 @@
 
   --font-display: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
   --font-body:    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  --palt-body-add: 0.02em;   /* 本文の書体が palt（かなの字詰め）に対応しているので、詰めたぶん字間を足す */
   --tracking: 0.02em;
 
   --radius: 24px;
@@ -48,3 +49,5 @@
 
 /* 暗い面は深い青緑→ミントのグラデ（finance の森の緑と見分けるため、明るく澄んだ緑に寄せる） */
 .slide.x-slide.x-dark { background: linear-gradient(135deg, #0C4A45 0%, #0F6B5C 60%, #178A76 100%); }
+/* 暗い面の地が緑なので、強調色（テーマの緑を白に寄せた色）は同系色で沈む。淡いミントへさらに白を寄せて、緑の地でも読める明るさにする */
+.slide.x-slide.x-dark { --acc-ink: color-mix(in srgb, var(--accent-2) 55%, white); --acc-big: color-mix(in srgb, var(--accent-2) 70%, white); }

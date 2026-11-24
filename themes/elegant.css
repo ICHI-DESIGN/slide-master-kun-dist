@@ -25,6 +25,7 @@
 
   /* --- 字組み: 明朝 --- */
   --font-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-num:     "Shippori Mincho";   /* 数字も見出しと同じ書体で組む（engine.css の欧文の数字を使わない） */
   --font-body:    "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --tracking: 0.06em;
 
