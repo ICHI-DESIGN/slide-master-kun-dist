@@ -11,6 +11,7 @@
 
 - **型が33種** — 表紙・比較・手順・グラフ（棒・折れ線・内訳のドーナツ）・表・料金・ピラミッド・2×2・ファネル・お客様の声・画像を並べる・スマホ画面・問いかけ／ワークなど
 - **表紙・章扉・締めの見た目が4種** — 斜めの色帯／左の色面／大見出し／以前の形。デッキ全体（`frames`）でも1枚ずつ（`style`）でも選べる
+- **中身のスライドの版面が4種** — 角丸の箱（card）／左に見出しの柱と黒の罫線（swiss）／斜めの帯と段違いの箱（kinetic）／その組み合わせ（mix）。デッキ全体（`pages`）でも1枚ずつ（`page`）でも選べる
 - **テーマが23種** — ビジネス／ポップ／和モダン／ミニマル／テック／ナチュラル／フェミニン／レトロ／爽やか／ダイナミック／ツートン／医療／不動産／士業・金融／子ども／自治体・公共／建設・製造／観光／フィットネス／グラデーション／黒×金／ネオン／北欧
 - **場面別の構成レシピが8種** — 営業提案・セミナー・会社説明・社内報告・ピッチ・イベント告知・研修・事例紹介
 - **描く前に止める** — 文字数オーバー、同じ型が3枚続く、図解が少ない、中身の無いグラフ、中身の無い章扉などを、エラー文と直し方つきで知らせます
@@ -37,6 +38,10 @@
 | 折れ線グラフ（fresh） | 問いかけ・ワーク（corporate） |
 |---|---|
 | ![](docs/images/line_fresh.jpg) | ![](docs/images/question_corporate.jpg) |
+
+**中身のスライドの版面4種**（同じ中身を card／swiss／kinetic で描いた物。mix は swiss を基本に、数字・課題の枚だけ kinetic）
+
+![版面の流儀](docs/images/pages_sheet.jpg)
 
 **業種・世界観のテーマ12種**（表紙／グラフ／キーメッセージ／数字の並び）
 
@@ -189,7 +194,7 @@ slide-master-kun/
 
 Slide Master Kun is a Claude Code skill that turns a plain-text script into a 16:9 slide deck (4K PNG / PDF / editable PPTX).
 Claude only chooses a layout and writes the words into `deck.json`; positions, sizes and colors are decided by scripts, and every slide is checked by machine before export.
-33 layouts and 23 themes. The instructions and the slides are in Japanese.
+33 layouts, 23 themes and 4 page styles (card / swiss / kinetic / mix). The instructions and the slides are in Japanese.
 
 - **Requirements**: Claude Code, Node.js 18+, Google Chrome (or run `npm run browsers` to use Chromium)
 - **Install**: clone this repository into `~/.claude/skills/slide-master-kun` and run `npm install` (commands above)

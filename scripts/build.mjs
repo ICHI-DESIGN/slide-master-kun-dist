@@ -17,7 +17,7 @@ import { launchBrowser, newSlidePage, waitSlideReady } from '../engine/browser.m
 import { readFileSync, readdirSync, mkdirSync, writeFileSync, rmSync, existsSync } from 'node:fs';
 import { resolve, join, relative, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { LAYOUTS, FRAME_LAYOUTS, frameOf, toneOf } from '../engine/layouts.mjs';
+import { LAYOUTS, FRAME_LAYOUTS, frameOf, pageOf, toneOf } from '../engine/layouts.mjs';
 import { validateDeck } from '../engine/validate.mjs';
 import { esc } from '../engine/text.mjs';
 import { checkSlide, checkDeck, summarize, printReport, W, H } from './qc.mjs';
@@ -61,6 +61,7 @@ const files = deck.slides.map((s, i) => {
   const L = LAYOUTS[s.layout];
   if (s.layout === 'section') sectionNo++;
   const frame = FRAME_LAYOUTS.includes(s.layout) ? frameOf(s, deck) : null;
+  const page = pageOf(s, deck);
   const ctx = { index: i, total: deck.slides.length, sectionNo, sectionsTotal, frame,
     asset: p => pathToFileURL(join(deckDir, p)).href };
   const t = toneOf(s, deck), tone = t === 'dark' ? ' x-dark' : t === 'accent' ? ' x-accent' : '';
@@ -71,7 +72,7 @@ const files = deck.slides.map((s, i) => {
 <link rel="stylesheet" href="${css('core/engine.css')}">
 <script data-fit src="${css('core/fit.js')}"></script>
 </head><body>
-<div class="slide x-slide${tone}${deck.video ? ' x-video' : ''}" data-layout="${s.layout}"${frame ? ` data-frame="${frame}"` : ''}>
+<div class="slide x-slide${tone}${deck.video ? ' x-video' : ''}" data-layout="${s.layout}"${frame ? ` data-frame="${frame}"` : ''}${page ? ` data-page="${page}"` : ''}>
 ${L.render(s, ctx)}
   ${deck.brand && !deck.video ? `<div class="brand"><span class="mark"></span>${esc(deck.brand)}</div>` : ''}
   ${i > 0 && !deck.video ? `<div class="pageno">${no}</div>` : ''}

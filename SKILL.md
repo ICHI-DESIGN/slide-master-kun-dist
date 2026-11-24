@@ -98,6 +98,7 @@ npm install          # playwright-core・pptxgenjs が入る。Google Chrome を
 {
   "theme": "fresh",
   "frames": "auto",
+  "pages": "mix",
   "brand": "サービス名 ｜ 会社名",
   "slides": [
     { "layout": "cover", "title": "…", "subtitle": "…", "meta": "2026.11 ご提案資料", "image": "assets/main.jpg" },
@@ -124,6 +125,15 @@ npm install          # playwright-core・pptxgenjs が入る。Google Chrome を
   | `auto`（既定） | テーマの性格で決める（対応表は `engine/layouts.mjs` の `FRAME_AUTO`。fresh・minimal → type、corporate・medical → block、pop・tech → slant など） | 迷ったらこれ |
   - 表紙に写真を入れるなら `image`、日付や資料名は `meta`、写真が無いときの大きな英字は `mark`（4字まで・既定 AI）
   - 締めの `cta` はボタン、`contact` は連絡先。どちらも無いと見出しが真ん中に来る
+- [ ] **中身のスライドの版面**（箱・罫線・見出しの置き方）は `pages` で必ず選ぶ（デッキ全体）。1枚だけ変えたいときはその枚に `"page"`。台本の場面を見て決める
+  | 値 | 見た目 | 向いている場面 |
+  |---|---|---|
+  | `swiss` | 見出しが左の柱、中身が右（横幅が要る型は見出しが上）。黒の太い罫線と大きな数字、色は1色 | 提案書・報告・士業・数字で説得する資料（きっちり・知的に） |
+  | `kinetic` | 斜めの帯、角の立った箱を段違いに並べ、ずらした色の板を影にする。見出しが大きい | 営業・告知・イベント・採用・講座の盛り上げ（勢い・熱量） |
+  | `mix` | swiss を基本に、見せ場の big-number・stats・problem だけ kinetic | 提案書の中に山場を作りたいとき（迷ったらこれ） |
+  | `card`（既定） | 角丸の白い箱＋影 | やわらかく見せたい・以前のデッキと見た目をそろえる |
+  - 表紙・章扉・締めなど枠の型には効かない（そちらは `frames`）
+  - 1枚だけの使い分けの例: swiss のデッキで、いちばん伝えたい数字の1枚だけ `"page": "kinetic"`
 - [ ] `notes` にスピーカーノートを書ける（PPTX のノート欄に入る）
 - [ ] **動画用と頼まれたときだけ（`"video": true`）**: 下20%（864px より下）は動画のテロップが重なるので中身を置かない。ブランド名・ページ番号は出ない。本文の高さが約1割狭くなるので**文字数は上限の7割**で書く。帯に入ると `VIDEO_BAND`、入り切らないと `ZONE_OVERFLOW` で止まる → 項目を減らす・2枚に分ける
 

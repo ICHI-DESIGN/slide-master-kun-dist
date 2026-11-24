@@ -77,6 +77,22 @@ export function frameOf(slide, deck = {}) {
   let h = 0; for (const ch of String(deck.theme || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
   return ['slant', 'block', 'type'][h % 3];
 }
+/* ---------- 中身のスライドの版面の流儀（page） ----------
+   deck.json の "pages"（デッキ全体）か、スライドの "page"（その1枚だけ）で選ぶ。書かなければ card（今までの見た目）
+     card    = 角丸の箱＋影（やわらかく見せる）
+     swiss   = 見出しを左の柱に置き、中身は右。黒の太い罫線と大きな数字、色は1色（提案書・報告・数字で説得）
+     kinetic = 斜めの帯、角の立った箱を段違いに並べ、ずらした色の板を影にする（営業・告知・イベント）
+     mix     = swiss を基本にして、見せ場の型（MIX_KINETIC）だけ kinetic
+   表紙・章扉・締めなど枠の型（family が frame）には効かない（そちらは frames の担当） */
+export const PAGE_STYLES = ['card', 'swiss', 'kinetic', 'mix'];
+export const MIX_KINETIC = ['big-number', 'stats', 'problem'];
+export function pageOf(slide, deck = {}) {
+  const L = LAYOUTS[slide.layout];
+  if (!L || L.family === 'frame') return null;
+  const want = slide.page || deck.pages || 'card';
+  if (want === 'mix') return MIX_KINETIC.includes(slide.layout) ? 'kinetic' : 'swiss';
+  return want === 'card' ? null : want;
+}
 /* その1枚が暗い面（dark）・色面（accent）・明るい面（light）のどれか。型の tone が関数のときは見た目で変わる */
 export function toneOf(slide, deck = {}) {
   const L = LAYOUTS[slide.layout]; if (!L) return 'light';

@@ -185,6 +185,10 @@ export async function checkSlide(page) {
       if (isDeco(box) || !visible(box)) continue;
       const pb = box.getBoundingClientRect(); if (pb.height < 160) continue;
       const bs = getComputedStyle(box);
+      // 囲いの見えない箱（版面 swiss の上罫だけの段など）は「空いた箱」に見えないので数えない
+      const clear = c => !c || c === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(c);
+      if (clear(bs.backgroundColor) && bs.backgroundImage === 'none' && bs.boxShadow === 'none'
+        && !parseFloat(bs.borderLeftWidth) && !parseFloat(bs.borderRightWidth) && !parseFloat(bs.borderBottomWidth)) continue;
       const inTop = pb.top + parseFloat(bs.paddingTop) + parseFloat(bs.borderTopWidth);
       const inBottom = pb.bottom - parseFloat(bs.paddingBottom) - parseFloat(bs.borderBottomWidth);
       const inH = inBottom - inTop; if (inH < 80) continue;
@@ -324,7 +328,9 @@ export async function checkSlide(page) {
         else lines.push({ top: rc.top, w: rc.width, h: rc.height });
       }
       const fs = parseFloat(getComputedStyle(h).fontSize);
-      const maxLines = h.matches('.quote-text, [data-slot=message]') ? 3 : 2;
+      // 版面 swiss で見出しを左の細い柱に置いた型は、3行までを正しい形とする
+      const sideHead = !!h.closest('.x-slide[data-page="swiss"]') && h.getBoundingClientRect().width < 720;
+      const maxLines = h.matches('.quote-text, [data-slot=message]') || sideHead ? 3 : 2;
       if (lines.length > maxLines)
         add('error', 'TITLE_TOO_LONG', `見出しが${lines.length}行になっている（上限${maxLines}行）:「${raw.slice(0, 20)}…」`, '見出しを短くする（目安: 1行あたり全角20字以内）', raw);
       if (lines.length >= 2 && lines[lines.length - 1].w < fs * 2.6)

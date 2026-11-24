@@ -83,6 +83,25 @@ await shoot(`<div style="background:#f2f2f0;padding:24px">
   <div style="font-size:26px;font-weight:800;margin-bottom:20px">業種・世界観のテーマ12種（表紙／グラフ／キーメッセージ／数字の並び）</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px 48px">${SHEET_THEMES.map(cell).join('')}</div></div>`, sheetW, 'themes_sheet.jpg');
 
+// 版面の流儀（同じ4枚を card / swiss / kinetic で）
+const PAGE_LAYOUTS = ['problem', 'stats', 'features', 'flow'];
+const pagePng = {};
+for (const pages of ['swiss', 'kinetic']) {
+  const dir = join(WORK, `pages-${pages}`);
+  cpSync(join(EX, 'all-layouts'), dir, { recursive: true, filter: s => !s.includes(`${join('all-layouts', 'out')}`) && !s.includes(`${join('all-layouts', 'html')}`) });
+  writeFileSync(join(dir, 'deck.json'), JSON.stringify({ ...base, pages }, null, 1));
+  build(dir, ['--scale=1']);
+  pagePng[pages] = {};
+  for (const f of readdirSync(join(dir, 'out')).filter(f => /^\d+_.+\.png$/.test(f))) pagePng[pages][f.replace(/^\d+_/, '').replace('.png', '')] ??= join(dir, 'out', f);
+}
+pagePng.card = pngOf[base.theme] || null;
+if (!pagePng.card) throw new Error(`見本のテーマ ${base.theme} を SINGLES か SHEET_THEMES に入れる`);
+const PW = 440, PH = 248;
+await shoot(`<div style="background:#f2f2f0;padding:24px">${[['card', 'card（既定）角丸の箱＋影'], ['swiss', 'swiss 左に見出しの柱・黒の太い罫線・大きな数字'], ['kinetic', 'kinetic 斜めの帯・段違いの箱・ずらした色の板の影']].map(([k, label]) => `
+  <div style="font-size:22px;font-weight:700;margin:14px 0 8px">${label}</div>
+  <div style="display:flex;gap:${G}px">${PAGE_LAYOUTS.map(l => `<img src="${uri(pagePng[k][l])}" style="width:${PW}px;height:${PH}px">`).join('')}</div>`).join('')}</div>`,
+  4 * PW + 3 * G + 48, 'pages_sheet.jpg');
+
 /* ---- 3. 見本の一覧（見本そのものを描いた sheet.png を縮める） ---- */
 for (const [name, file] of [['inquiry-ai-proposal', 'hero_sheet.jpg'], ['cafe-workshop', 'cafe_sheet.jpg'], ['all-layouts', 'gallery_sheet.jpg']]) {
   const dir = join(WORK, `ex-${name}`);
