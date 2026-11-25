@@ -49,6 +49,7 @@
 - 8枚以上のデッキは暗い面（section / message / closing）を2枚以上。章の区切りに section、山場に message
 - section の title は agenda の項目と同じ言葉にする。**section の直後は必ず中身のスライド**（章扉が続く・章扉のすぐ後が締めは止まる）
 - 中身のスライドの版面はデッキ全体の `pages`（card / swiss / kinetic / mix）で選ぶ。1枚だけ変えるならその枚に `"page"`。表紙・章扉・締めなど cover / agenda / section / message / photo / question / quote / closing には効かない
+- 写真と背景の質感はデッキ全体の `texture`（plain / graphic）で選ぶ。1枚だけ変えるならその枚に `"texture"`。表紙・章扉・締めにも効く
 - **図解の割合を満たすために中身の無い図を作らない**（値が全部同じグラフは止まる。台本に数字が無ければ数字の型を選ばない）
 
 ### 言葉の決まり

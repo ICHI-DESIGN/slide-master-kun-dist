@@ -93,6 +93,15 @@ export function pageOf(slide, deck = {}) {
   if (want === 'mix') return MIX_KINETIC.includes(slide.layout) ? 'kinetic' : 'swiss';
   return want === 'card' ? null : want;
 }
+
+/* 写真と背景の質感（deck.texture ／ slide.texture）。表紙・章扉・締めにも効く
+     plain   = 今のまま（書かなければこれ）。写真は撮ったときの色、暗い面は単色＋ぼかした光
+     graphic = 写真を強めの白黒＋網点＋テーマ色、暗い面に色のにじみ・斜めの光・粒子。数字カードの飾りアイコンを外す */
+export const TEXTURES = ['plain', 'graphic'];
+export function textureOf(slide, deck = {}) {
+  const want = slide.texture || deck.texture || 'plain';
+  return want === 'plain' ? null : want;
+}
 /* その1枚が暗い面（dark）・色面（accent）・明るい面（light）のどれか。型の tone が関数のときは見た目で変わる */
 export function toneOf(slide, deck = {}) {
   const L = LAYOUTS[slide.layout]; if (!L) return 'light';

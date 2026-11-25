@@ -5,7 +5,7 @@
    ===================================================================== */
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { LAYOUTS, LAYOUT_IDS, FRAME_IDS, VISUAL_IDS, CARDISH_IDS, FRAME_STYLES, PAGE_STYLES, toneOf, DECK_RULES as R } from './layouts.mjs';
+import { LAYOUTS, LAYOUT_IDS, FRAME_IDS, VISUAL_IDS, CARDISH_IDS, FRAME_STYLES, PAGE_STYLES, TEXTURES, toneOf, DECK_RULES as R } from './layouts.mjs';
 import { width, titleProblem, plain } from './text.mjs';
 
 // 分類は layouts.mjs の family が正本
@@ -24,6 +24,7 @@ export function validateDeck(deck, deckDir, root) {
 
   if (deck.frames !== undefined && !['auto', ...FRAME_STYLES].includes(deck.frames)) E('deck.frames', `frames「${deck.frames}」は無い`, `表紙・章扉・締めの見た目は ${['auto', ...FRAME_STYLES].join(' / ')} のどれか（書かなければテーマごとに自動）`);
   if (deck.pages !== undefined && !PAGE_STYLES.includes(deck.pages)) E('deck.pages', `pages「${deck.pages}」は無い`, `中身のスライドの版面は ${PAGE_STYLES.join(' / ')} のどれか（書かなければ card）`);
+  if (deck.texture !== undefined && !TEXTURES.includes(deck.texture)) E('deck.texture', `texture「${deck.texture}」は無い`, `写真と背景の質感は ${TEXTURES.join(' / ')} のどれか（書かなければ plain）`);
   if (deck.video !== undefined && typeof deck.video !== 'boolean') E('deck.video', `video は true / false で書く（今: ${JSON.stringify(deck.video)}）`, '動画に使うスライドなら "video": true、それ以外は書かない');
 
   const slides = deck.slides;
@@ -35,6 +36,7 @@ export function validateDeck(deck, deckDir, root) {
       if (!PAGE_STYLES.includes(s.page)) E(`${id} page`, `page「${s.page}」は無い`, `その1枚の版面は ${PAGE_STYLES.join(' / ')} のどれか`);
       else if (L.family === 'frame') Wn(`${id} page`, 'この型には page が効かない（表紙・章扉・締めなどの枠の型）', '見た目を変えるなら "style"（frames の値）を使う');
     }
+    if (s.texture !== undefined && !TEXTURES.includes(s.texture)) E(`${id} texture`, `texture「${s.texture}」は無い`, `その1枚の質感は ${TEXTURES.join(' / ')} のどれか`);
 
     // 枠の検査
     const walk = (spec, val, path) => {
@@ -71,7 +73,7 @@ export function validateDeck(deck, deckDir, root) {
           break;
       }
     };
-    walk({ kind: 'obj', fields: { layout: { kind: 'text', max: 20, min: 0, req: true }, notes: { kind: 'text', max: 2000, min: 0, req: false }, page: { kind: 'text', max: 10, min: 0, req: false }, ...L.spec } }, s, '');
+    walk({ kind: 'obj', fields: { layout: { kind: 'text', max: 20, min: 0, req: true }, notes: { kind: 'text', max: 2000, min: 0, req: false }, page: { kind: 'text', max: 10, min: 0, req: false }, texture: { kind: 'text', max: 10, min: 0, req: false }, ...L.spec } }, s, '');
 
     // 見出しの文末
     for (const key of ['title', 'message']) {

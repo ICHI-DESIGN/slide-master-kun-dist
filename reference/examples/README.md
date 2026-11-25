@@ -10,6 +10,7 @@ deck.json を書く前に、**用途の近い見本を1つ開いて形式を真�
 | `all-layouts/` | fresh | 36 | **全33型を1枚ずつ**。型の見た目を確かめる・エンジンを直したあとの総点検用（台本は無い。全型を入れるので図解率は目標に届かず注意が出る）。画面・サイトの画像は架空のものを HTML で作って撮った |
 | `pages-swiss/` | fresh | 36 | all-layouts と同じ中身を版面 `"pages": "swiss"` で描いた物（見出しの柱・黒の罫線）。画像は all-layouts の物を使う |
 | `pages-kinetic/` | fresh | 36 | 同じ中身を `"pages": "kinetic"` で描いた物（斜めの帯・段違いの箱） |
+| `texture-graphic/` | fresh | 36 | 同じ中身を質感 `"texture": "graphic"` で描いた物（写真を白黒＋網点＋テーマ色・暗い面に色のにじみ） |
 
 それぞれ `script.md`（台本）・`deck.json`（中身）・`sheet.jpg`（完成の一覧）がある。
 **エンジン・テーマ・検品を直したら `npm run samples` で全部を描いて点検する**（`-- --sheets` を付けると sheet.jpg も作り直す）。

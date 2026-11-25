@@ -102,6 +102,19 @@ await shoot(`<div style="background:#f2f2f0;padding:24px">${[['card', 'card（�
   <div style="display:flex;gap:${G}px">${PAGE_LAYOUTS.map(l => `<img src="${uri(pagePng[k][l])}" style="width:${PW}px;height:${PH}px">`).join('')}</div>`).join('')}</div>`,
   4 * PW + 3 * G + 48, 'pages_sheet.jpg');
 
+// 写真と背景の質感（同じ4枚を plain / graphic で）
+const TEX_LAYOUTS = ['photo', 'message', 'stats', 'quote'];
+const texDir = join(WORK, 'texture-graphic');
+cpSync(join(EX, 'all-layouts'), texDir, { recursive: true, filter: s => !s.includes(`${join('all-layouts', 'out')}`) && !s.includes(`${join('all-layouts', 'html')}`) });
+writeFileSync(join(texDir, 'deck.json'), JSON.stringify({ ...base, texture: 'graphic' }, null, 1));
+build(texDir, ['--scale=1']);
+const texPng = { plain: pagePng.card, graphic: {} };
+for (const f of readdirSync(join(texDir, 'out')).filter(f => /^\d+_.+\.png$/.test(f))) texPng.graphic[f.replace(/^\d+_/, '').replace('.png', '')] ??= join(texDir, 'out', f);
+await shoot(`<div style="background:#f2f2f0;padding:24px">${[['plain', 'plain（既定）写真はそのまま・暗い面は単色＋ぼかした光'], ['graphic', 'graphic 写真を白黒＋網点＋テーマ色・暗い面に色のにじみと斜めの光']].map(([k, label]) => `
+  <div style="font-size:22px;font-weight:700;margin:14px 0 8px">${label}</div>
+  <div style="display:flex;gap:${G}px">${TEX_LAYOUTS.map(l => `<img src="${uri(texPng[k][l])}" style="width:${PW}px;height:${PH}px">`).join('')}</div>`).join('')}</div>`,
+  4 * PW + 3 * G + 48, 'texture_sheet.jpg');
+
 /* ---- 3. 見本の一覧（見本そのものを描いた sheet.png を縮める） ---- */
 for (const [name, file] of [['inquiry-ai-proposal', 'hero_sheet.jpg'], ['cafe-workshop', 'cafe_sheet.jpg'], ['all-layouts', 'gallery_sheet.jpg']]) {
   const dir = join(WORK, `ex-${name}`);
